@@ -29,12 +29,19 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: dist-files
-          path: |
-            dist
-            package.json # Redundant but included to show multiple files
+          path: dist
+#          path: |
+#            dist
+#            package.json # Redundant but included to show multiple files
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: dist-files
+      - name: Output dist contents
+        run: ls
       - name: Deploy
         run: echo "Deploying..."
